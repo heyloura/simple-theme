@@ -32,9 +32,9 @@
         Sometimes I just want to say something on the internet that isn't part of anything in particular.
         Below you can find a sample of some recent emphemeral musings I've had.
     </p>
-    {{ $list := (where .Site.Pages "Type" "post") 20 }}
-    {{ range $list }}
-		{{ if .Title }}
+    {{ $list := (where .Site.Pages "Type" "post") }}
+    {{ range $list 20 }}
+	{{ if .Title }}
         {{ else }}
             {{ $stringCheck := .Content }}
     		{{ $stringResult := substr $stringCheck 0 10 }}
