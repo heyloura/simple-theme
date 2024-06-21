@@ -1,32 +1,36 @@
 {{ define "main" }}
       	<section class="h-feed">
 	   	{{ range where .Pages.ByDate.Reverse "Type" "post"  }}
-      		<dl class="h-entry">
-			<dt>
-				<a href="{{ .Permalink }}" class="u-url p-name"> {{ .Title }} </a> ◊ <time class="dt-published" datetime="{{ .Date.Format "2006-01-02 15:04:05 -0700" }}">{{ .Date.Format "Jan 2, 2006" }}</time>
-				{{- if .Page.Params.categories -}}
-					{{- range $index, $category := .Page.Params.categories -}}
-					 ◊ <a class="p-category" href="/categories/{{ $category | anchorize }}/">#{{ $category }}</a> 
+			{{ if .Title}}
+	      		<dl class="h-entry">
+				<dt>
+					<a href="{{ .Permalink }}" class="u-url p-name"> {{ .Title }} </a> ◊ <time class="dt-published" datetime="{{ .Date.Format "2006-01-02 15:04:05 -0700" }}">{{ .Date.Format "Jan 2, 2006" }}</time>
+					{{- if .Page.Params.categories -}}
+						{{- range $index, $category := .Page.Params.categories -}}
+						{{ if eq .Title $category }}
+						{{ else }}
+						&nbsp;◊&nbsp;<a class="p-category" href="/categories/{{ $category | anchorize }}/">#{{ $category }}</a> 
+						{{- end -}}
 					{{- end -}}
-				{{- end -}}
-			</dt>
-			{{ if in .RawContent "<!--more-->" }}
-			<dd class="p-summary">
-			    <p>
-			    {{ $splitContents := split .RawContent "<!--more-->" }}
-			    {{ $summary := index $splitContents 0 }}
-			    {{ $summary := replaceRE "\\[\\^.*?\\]" "" $summary }}
-			    {{ $summary := replaceRE "\\n\\[\\^.*?\\]:.*" "" $summary }}
-			    {{ $summary | markdownify }}
-			    </p>
-			    <p><a href="{{ .Permalink }}">Read More →</a></p>
-			</dd>
-		    	{{ else }}
-			<dd class="e-content">
-			    {{ .Content }}
-			</dd>
+				</dt>
+				{{ if in .RawContent "<!--more-->" }}
+				<dd class="p-summary">
+				    <p>
+				    {{ $splitContents := split .RawContent "<!--more-->" }}
+				    {{ $summary := index $splitContents 0 }}
+				    {{ $summary := replaceRE "\\[\\^.*?\\]" "" $summary }}
+				    {{ $summary := replaceRE "\\n\\[\\^.*?\\]:.*" "" $summary }}
+				    {{ $summary | markdownify }}
+				    </p>
+				    <p><a href="{{ .Permalink }}">Read More →</a></p>
+				</dd>
+			    	{{ else }}
+				<dd class="e-content">
+				    {{ .Content }}
+				</dd>
+				{{ end }}
+			</dl>
 			{{ end }}
-		</dl>
 		{{ end }}
   	</section>
 {{ end }}
