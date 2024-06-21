@@ -32,6 +32,44 @@
         Sometimes I just want to say something on the internet that isn't part of anything in particular.
         Below you can find a sample of some recent emphemeral musings I've had.
     </p>
-    
+    {{ $list := (where .Site.Pages "Type" "post") 20 }}
+    {{ range $list }}
+		{{ if .Title }}
+        {{ else }}
+            {{ $stringCheck := .Content }}
+    		{{ $stringResult := substr $stringCheck 0 10 }}
+    		{{ $image := ".jpg" }}
+            {{ $jpeg := ".jpeg" }}
+    		{{ $video := "<video" }}
+    		{{ $audio := "<audio" }}
+    		
+                {{ if in $stringCheck (or ($image) ($jpeg) ($video) ($audio)) }}
+                {{ else }}
+                    <article class="h-entry">
+                        <header>
+                            <h3>
+                                <a href="{{ .Permalink }}" class="u-url">
+                		            <time class="dt-published" datetime="{{ .Date.Format "2006-01-02 15:04:05 -0700" }}" >
+                			            {{ .Date.Format "2 January 2006" }}
+                		            </time>
+                	            </a>
+                            </h3>
+                        </header>
+                        <div class="e-content">
+                            {{ .Content }}
+                        </div>
+                        <footer>
+                            {{- if .Page.Params.categories -}}
+                            <p>
+                              {{- range $index, $category := .Page.Params.categories -}}
+                               <a href="/categories/{{ $category | anchorize }}/">#{{ $category }}</a>
+                              {{- end -}}
+                            </p>
+                            {{- end -}}
+                        </footer>
+                    </article>
+                {{ end }}
+            {{ end }}
+        {{ end }}
 </section>
 {{ end }}
