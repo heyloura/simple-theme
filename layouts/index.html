@@ -29,7 +29,7 @@
 <section class="h-feed">
 	<header><h2>Dear Internet</h2></header>
 	<p>
-		Sometimes I just want to say something on the internet that isn't part of anything in particular.
+		Sometimes I just want to say/share something on the internet that isn't part of anything in particular.
 		Below you can find my ephemeral musings. Wanna chat about one? Click on the hyperlink and join the conversation (～￣▽￣)～
 	</p>
 	<p>You can also strike up a <a href="/replies">conversation</a> on <a href="https://micro.blog/heyloura">micro.blog</a> or on the fediverse at <a href="https://micro.blog/heyloura?remote_follow=1">@heyloura@heyloura.com</a></p>
@@ -40,29 +40,33 @@
 		{{ if .Page.Params.categories }}
 		{{ else }}
 		{{ if .Title }}
+			<article class="h-entry">
+				<dt>
+					<a href="{{ .Permalink }}" class="u-url p-name"> {{ .Title }} 
+						
+					</a> ◊ <time class="dt-published" datetime="{{ .Date.Format "2006-01-02 15:04:05 -0700" }}">{{ .Date.Format "Jan 2, 2006" }}</time>
+					{{- if .Page.Params.categories -}}
+						{{- range $index, $category := .Page.Params.categories -}}
+						 ◊ <a class="p-category" href="/categories/{{ $category | anchorize }}/">#{{ $category }}</a> 
+						{{- end -}}
+					{{- end -}}
+				</dt>
+				<dd class="e-content">{{ .Content }}</dd>
+			</article>
 		{{ else }}
-			{{ $stringCheck := .Content }}
-			{{ $stringResult := substr $stringCheck 0 10 }}
-			{{ $image := ".jpg" }}
-			{{ $jpeg := ".jpeg" }}
-			{{ $video := "<video" }}
-			{{ $audio := "<audio" }}	
-			{{ if in $stringCheck (or ($image) ($jpeg) ($video) ($audio)) }}
-			{{ else }}			
-				<article class="h-entry">
-						<dt>
-							<a href="{{ .Permalink }}" class="u-url">
-								<time class="dt-published" datetime="{{ .Date.Format "2006-01-02 15:04:05 -0700" }}">{{ .Date.Format "Jan 2, 2006" }}</time>
-							</a>
-							{{- if .Page.Params.categories -}}
-								{{- range $index, $category := .Page.Params.categories -}}
-								 ◊ <a class="p-category" href="/categories/{{ $category | anchorize }}/">#{{ $category }}</a> 
-								{{- end -}}
-							{{- end -}}
-						</dt>
-						<dd class="e-content">{{ .Content }}</dd>
-				</article>
-			{{ end }}
+			<article class="h-entry">
+				<dt>
+					<a href="{{ .Permalink }}" class="u-url">
+						<time class="dt-published" datetime="{{ .Date.Format "2006-01-02 15:04:05 -0700" }}">{{ .Date.Format "Jan 2, 2006" }}</time>
+					</a>
+					{{- if .Page.Params.categories -}}
+						{{- range $index, $category := .Page.Params.categories -}}
+						 ◊ <a class="p-category" href="/categories/{{ $category | anchorize }}/">#{{ $category }}</a> 
+						{{- end -}}
+					{{- end -}}
+				</dt>
+				<dd class="e-content">{{ .Content }}</dd>
+			</article>
 		{{ end }}
 		{{ end }}
 	{{ end }}
