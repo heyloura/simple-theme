@@ -11,6 +11,11 @@
 </section>
 <section class="h-feed">
     <header><h2>My Interests</h2></header>
+    <p>
+        These are the things that have interested me enough to post something. It could
+        be a quick note or a longer musing. Sometimes I attach photos/screenshots, books I've read, or
+        I'll bookmark something on the web. Take a look:
+    </p>
     <ol>
     {{ range .Site.Menus.main }}
         {{ if .Page.Params.redirect }}
@@ -23,10 +28,9 @@
 </section>
 <section class="h-feed">
     <header><h2>Dear Internet</h2></header>
-    <p>
-        Somehow I missed the twitter thing, I don't really enjoy Facebook, and Reddit never caught my fancy. I actually found
-        the web pretty boring. So in a spur of nostalgia in 2022 I looked at sites on neocities and learned a bit about the indieweb.
-        After a bit I gave micro.blog a try and found I really enjoy it there.
+    <p>Sometimes I just want to say something on the internet that isn't part of anything in particular.
+        Below you can find a sample of some recent emphemeral musings I've had. I do keep an <a href="/ephemeral">ephemeral archive</a>
+        and a <a href="/photos">photos page</a>, because it is the <em>web</em> afterall.
     </p>
 </section>
 {{ end }}
