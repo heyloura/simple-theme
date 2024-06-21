@@ -1,6 +1,11 @@
 {{ define "main" }}
-	<header><h2>I'm interested in {{ strings.FirstUpper .Title }}</h2></header>
-
+	<header><h2>I'm interested in {{ .Title }}.</h2></header>
+	<p>
+		Here you can find some ideas or thoughts I had or maybe a picture, bookmark, or book that I found.
+		Wanna chat about {{ .Title }}? Click on the hyperlink and join the conversation o(*￣︶￣*)o or messege me on
+		<a href="https://micro.blog/heyloura">micro.blog</a> or on the fediverse at <a href="https://micro.blog/heyloura?remote_follow=1">@heyloura@heyloura.com</a>
+	</p>
+	<p>Yours truly, <a rel="author" class="p-author h-card" href="/">Loura</a></p>
 {{ if eq .Title "homeschooling" }}
 <section>
 			<h2 id="planning-20232024">Planning 2023/2024</h2>
