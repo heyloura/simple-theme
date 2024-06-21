@@ -1,14 +1,5 @@
 {{ define "main" }}
-
-	  <hr/>
-        <h3 style="margin-bottom:var(--space-xs-s);" class="heading">{{ strings.FirstUpper .Title }} 
-      </h3>
-       <h3 style="margin-top:0;" style="margin-bottom:0;" class="heading">
-         <a class="subheading" href="#posts">Posts</a> 
-        <small> ※ </small> <a class="subheading"  href="#ephemeral">Ephemeral</a>
-        <small> ※ </small> <a class="subheading"  href="#photos">Photos</a>
-      </h3>
-     <hr/>
+	<header><h2>I'm interested in {{ strings.FirstUpper .Title }}</h2></header>
 
 {{ if eq .Title "homeschooling" }}
 <section>
