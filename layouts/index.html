@@ -6,10 +6,11 @@
     <p>
         Hi, I'm Loura. I'm a human living in the USA and this is my digital space. 
         Please feel free to explore, learn more <a href="/about">about me</a>, 
-        <a href="/work">my work</a>, my interests and what I'm up to <a href="/now">now</a>.
+        <a href="/work">my work</a> and what I'm up to <a href="/now">now</a>.
     </p>
 </section>
 <section class="h-feed">
+    <header><h2>My Interests</h2></header>
     <ol>
     {{ range .Site.Menus.main }}
         {{ if .Page.Params.redirect }}
@@ -19,5 +20,8 @@
         {{ end }}
     {{ end }}
     </ol>
+</section>
+<section class="h-feed">
+    <header><h2>Dear Internet</h2></header>
 </section>
 {{ end }}
