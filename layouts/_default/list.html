@@ -1,37 +1,144 @@
 {{ define "main" }}
-      	<section class="h-feed">
-	   	{{ range where .Pages.ByDate.Reverse "Type" "post"  }}
-			{{ if .Title}}
-	      		<dl class="h-entry">
-				<dt>
-					<a href="{{ .Permalink }}" class="u-url p-name"> {{ .Title }} </a> ◊ <time class="dt-published" datetime="{{ .Date.Format "2006-01-02 15:04:05 -0700" }}">{{ .Date.Format "Jan 2, 2006" }}</time>
-					{{- if .Page.Params.categories -}}
-						{{- range $index, $category := .Page.Params.categories -}}
-							{{ if eq .Title $category }}
-							{{ else }}
-							&nbsp;◊&nbsp;<a class="p-category" href="/categories/{{ $category | anchorize }}/">#{{ $category }}</a> 
-							{{ end }}
-						{{- end -}}
-					{{- end -}}
-				</dt>
-				{{ if in .RawContent "<!--more-->" }}
-				<dd class="p-summary">
-				    <p>
-				    {{ $splitContents := split .RawContent "<!--more-->" }}
-				    {{ $summary := index $splitContents 0 }}
-				    {{ $summary := replaceRE "\\[\\^.*?\\]" "" $summary }}
-				    {{ $summary := replaceRE "\\n\\[\\^.*?\\]:.*" "" $summary }}
-				    {{ $summary | markdownify }}
-				    </p>
-				    <p><a href="{{ .Permalink }}">Read More →</a></p>
-				</dd>
-			    	{{ else }}
-				<dd class="e-content">
-				    {{ .Content }}
-				</dd>
-				{{ end }}
-			</dl>
-			{{ end }}
+
+	  <hr/>
+        <h3 style="margin-bottom:var(--space-xs-s);" class="heading">{{ strings.FirstUpper .Title }} 
+      </h3>
+       <h3 style="margin-top:0;" style="margin-bottom:0;" class="heading">
+         <a class="subheading" href="#posts">Posts</a> 
+        <small> ※ </small> <a class="subheading"  href="#ephemeral">Ephemeral</a>
+        <small> ※ </small> <a class="subheading"  href="#photos">Photos</a>
+      </h3>
+     <hr/>
+
+{{ if eq .Title "homeschooling" }}
+<section>
+			<h2 id="planning-20232024">Planning 2023/2024</h2>
+<p>Looks like next year will be just my son. My daughter is super excited to try out our local public school for sixth grade. I’m currently brainstorming about what to use for my son’s 8th grade year and getting him ready to launch into high school.</p>
+<p><a href="https://heyloura.com/eighth-grade-for-2023-2024/">Eighth Grade for 2023/2024</a></p>
+<h2 id="past-grades">Past Grades</h2>
+<ul>
+<li><a href="/seventh-grade-for-2022-2023">Seventh Grade for 2022/2023</a></li>
+<li><a href="/fifth-grade-for-2022-2023/">Fifth Grade for 2022/2023</a></li>
+</ul>
+			</section><hr/>
+{{end}}
+{{ if eq .Title "tai chi" }}
+<section>
+        <h2>Meditation in Motion</h2>
+<blockquote style="padding-left: var(--space-xs-s);border-left: 1px solid var(--text);">
+<p>Tai Chi, imagination becomes reality.</p>
+<p>Sifu Jamie</p>
+</blockquote>
+<h3 id="warm-ups-and-basic-exercises">Warm ups and Basic Exercises</h3>
+<ul>
+<li><a href="/tai-chi/eight-silk-brocades/">Qi Gong - Eight Silk Brocades</a></li>
+</ul>
+<h3 id="forms">Forms</h3>
+<ul>
+<li><a href="/tai-chi/long-yang">Traditional Yang Tai Chi 108 Movement Long Form</a></li>
+</ul>
+			</section>
+		<hr/>
+{{ end }}
+
+
+	{{ $paginator := .Paginate (where .Pages.ByDate.Reverse "Type" "post") (index .Site.Params "archive-paginate" | default 25) }}
+
+        <h3 class="heading">{{ strings.FirstUpper .Title }} Posts</h3>
+       <hr/>
+      <section>
+                  <ul id="posts" class="posts">
+	{{ range $paginator.Pages  }}
+
+		{{ if .Title }}
+			<li style="margin:0;"><p>
+              <small><time class="dt-published" datetime="{{ .Date.Format "2006-01-02 15:04:05 -0700" }}">{{ .Date.Format "Jan 2, 2006" }}</time></small><br/><a class="u-url p-name" href="{{ .Permalink }}">{{ .Title }}</a>
+             {{- if .Page.Params.categories -}}
+  {{- range $index, $category := .Page.Params.categories -}}
+   <a class="subheading" href="/categories/{{ $category | anchorize }}/">#{{ $category }}</a>
+  {{- end -}}
+{{- end -}}
+         </p></li>
 		{{ end }}
-  	</section>
+
+{{ end }}
+
+  </ul>
+      </section>
+      <hr/>
+
+
+	{{ $paginator := .Paginate (where .Pages.ByDate.Reverse "Type" "post") (index .Site.Params "archive-paginate" | default 25) }}
+        <h3 id="ephemeral"  class="heading">{{ strings.FirstUpper .Title }} Ephemeral</h3>
+       <hr/>
+      <section>
+        <ul class="posts" style="padding:0;list-style-type: none;">
+	{{ range $paginator.Pages  }}
+
+		{{ if .Title }}
+        {{ else }}
+
+{{ $stringCheck := .Content }}
+		{{ $stringResult := substr $stringCheck 0 10 }}
+		{{ $image := ".jpg" }}
+        {{ $jpeg := ".jpeg" }}
+		{{ $video := "<video" }}
+		{{ $audio := "<audio" }}
+		{{ if in $stringCheck (or ($image) ($jpeg) ($video) ($audio)) }}
+        {{ else }}
+
+			<li><h3><small>
+<a href="{{ .Permalink }}" class="u-url">
+		<time class="dt-published" datetime="{{ .Date.Format "2006-01-02 15:04:05 -0700" }}" >
+			{{ .Date.Format "2 January 2006" }}
+		</time>
+	</a></small></h3>
+<div class="e-content">
+
+{{ .Content }}
+
+</div>
+
+             {{- if .Page.Params.categories -}}
+<p>
+  {{- range $index, $category := .Page.Params.categories -}}
+   <a class="subheading" href="/categories/{{ $category | anchorize }}/">#{{ $category }}</a>
+  {{- end -}}
+</p>
+{{- end -}}
+         </li>
+
+
+{{ end }}
+
+
+		{{ end }}
+
+        {{ end }}
+
+        </ul>
+      </section>
+<hr/>
+
+	{{- $list := where .Pages ".Params.photos" "!=" nil -}}
+	{{- $len := (len $list) -}}
+<h3 class="heading">{{ strings.FirstUpper .Title }} Photos</h3>
+<hr/>
+<section>
+	<div class="photos-grid-container" style="display: grid; grid-column-gap: 15px; grid-row-gap: 15px; grid-template-columns: 33% 33% 33%;">
+
+	{{ range $index, $value := $list }}
+		<a href="{{ .Permalink }}">
+			{{ range first 1 .Params.photos }}
+				<img src="{{ . }}" width="300" height="300" style="border-radius: 5px; max-width: 100%; height: auto;" class="photos-grid-item" loading="lazy" />
+			{{ end }}
+		</a>
+	{{ end }}
+
+	</div>
+      </section>
+      <hr/>
+
+
+
 {{ end }}
