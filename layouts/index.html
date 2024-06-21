@@ -46,23 +46,19 @@
 				{{ if in $stringCheck (or ($image) ($jpeg) ($video) ($audio)) }}
 				{{ else }}
 					<article class="h-entry">
-					<header>
-							<h3>
-									<a href="{{ .Permalink }}" class="u-url">
-									<time class="dt-published" datetime="{{ .Date.Format "2006-01-02 15:04:05 -0700" }}" >
-										{{ .Date.Format "2 January 2006" }}
-									</time>
-								</a>
-							</h3>
-					</header>
 					<div class="e-content">
 							{{ .Content }}
 					</div>
 					<footer>
 							{{- if .Page.Params.categories -}}
 							<p>
+								<a href="{{ .Permalink }}" class="u-url">
+									<time class="dt-published" datetime="{{ .Date.Format "2006-01-02 15:04:05 -0700" }}" >
+										{{ .Date.Format "2 January 2006" }}
+									</time>
+								</a>
 								{{- range $index, $category := .Page.Params.categories -}}
-								 <a href="/categories/{{ $category | anchorize }}/">#{{ $category }}</a>
+								 ◊ <a href="/categories/{{ $category | anchorize }}/">#{{ $category }}</a>
 								{{- end -}}
 							</p>
 							{{- end -}}
