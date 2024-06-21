@@ -37,6 +37,8 @@
 	<dl>
 	{{ $paginator := .Paginate (where .Site.Pages.ByDate.Reverse "Type" "post") (index .Site.Params "archive-paginate" | default 20) }}
 	{{ range $paginator.Pages  }}
+		{{ if .Page.Params.categories }}
+		{{ else }}
 		{{ if .Title }}
 		{{ else }}
 			{{ $stringCheck := .Content }}
@@ -61,6 +63,7 @@
 						<dd class="e-content">{{ .Content }}</dd>
 				</article>
 			{{ end }}
+		{{ end }}
 		{{ end }}
 	{{ end }}
   </dl>
