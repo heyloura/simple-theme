@@ -49,20 +49,18 @@
 						<div class="e-content">
 								{{ .Content }}
 						</div>
-						<footer>
+						<footer><p><small>
+								<a href="{{ .Permalink }}" class="u-url">
+									<time class="dt-published" datetime="{{ .Date.Format "2006-01-02 15:04:05 -0700" }}" >
+										{{ .Date.Format "2 January 2006" }}
+									</time>
+								</a>
 								{{- if .Page.Params.categories -}}
-								<p><small>
-									<a href="{{ .Permalink }}" class="u-url">
-										<time class="dt-published" datetime="{{ .Date.Format "2006-01-02 15:04:05 -0700" }}" >
-											{{ .Date.Format "2 January 2006" }}
-										</time>
-									</a>
 									{{- range $index, $category := .Page.Params.categories -}}
 									 ◊ <a href="/categories/{{ $category | anchorize }}/">#{{ $category }}</a>
 									{{- end -}}
-								</small></p>
 								{{- end -}}
-						</footer>
+						</small></p></footer>
 					</article>
 				{{ end }}
 			{{ end }}
