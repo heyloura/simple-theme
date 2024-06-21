@@ -51,7 +51,22 @@
 						{{- end -}}
 					{{- end -}}
 				</dt>
-				<dd class="e-content">{{ .Content }}</dd>
+				{{ if in .RawContent "<!--more-->" }}
+				<dd class="p-summary">
+				    <p>
+				    {{ $splitContents := split .RawContent "<!--more-->" }}
+				    {{ $summary := index $splitContents 0 }}
+				    {{ $summary := replaceRE "\\[\\^.*?\\]" "" $summary }}
+				    {{ $summary := replaceRE "\\n\\[\\^.*?\\]:.*" "" $summary }}
+				    {{ $summary | markdownify }}
+				    </p>
+				    <p><a href="{{ .Permalink }}">Read More →</a></p>
+				</dd>
+			    {{ else }}
+				<dd class="e-content">
+				    {{ .Content }}
+				</dd>
+			    {{ end }}
 			</article>
 		{{ else }}
 			<article class="h-entry">
