@@ -30,16 +30,13 @@
 <body>
 <header>
 	<h1>Hey Loura!</h1>
-	<nav> ◈
-		{{ range .Site.Menus.main }}
-		        {{ if .Page.Params.redirect }}
-		            <a class="page-link" href="{{ .Page.Params.redirect }}">{{ .Name }}</a> ◈
-		        {{ else }}
-		            <a class="page-link" href="{{ .URL | relLangURL | safeURL }}">{{ .Name }}</a> ◈
-		        {{ end }}
-	    	{{ end }}
+	<nav> 
+		<a href="/">Home</a> ◈
+		<a href="/about">About</a> ◈
+		<a href="/photos">Photos</a> ◈
+		<a href="/archive">Archive</a> 
 	</nav>
 </header>
-{{ block "main" . }}{{ end }}  
+<main>{{ block "main" . }}{{ end }}  </main>
 </body>
 </html>
