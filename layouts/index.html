@@ -90,8 +90,8 @@
 		        postA.innerHTML =  conversation.items.length + (conversation.items.length == 1 ? ' comment' : ' comments');
 			let postSpan = document.createElement('span');
 			postSpan.innerHTML = '◊ ';
-		        repliesLink.prepend(postSpan);
-			repliesLink.prepend(postA);
+		        repliesLink.prepend(postA);
+			repliesLink.prepend(postSpan);
 		    } else {
 		        repliesLink.remove()
 		    }
