@@ -17,13 +17,12 @@
         I'll bookmark something on the web. Take a look:
     </p>
     <ol>
-    {{ range .Site.Menus.main }}
-        {{ if .Page.Params.redirect }}
-            <li><a class="page-link" href="{{ .Page.Params.redirect }}">{{ .Name }}</a></li>
-        {{ else }}
-            <li><a class="page-link" href="{{ .URL | relLangURL | safeURL }}">{{ .Name }}</a></li>
-        {{ end }}
-    {{ end }}
+	{{ $list := ($.Site.GetPage "taxonomyTerm" "categories").Pages }}
+	{{ if gt (len $list) 0 }}
+		{{ range $list }}
+			<li><a href="{{ .Permalink }}">{{ .Title }}</a></li>
+		{{ end }}
+	{{ end }}
     </ol>
 </section>
 <section class="h-feed">
