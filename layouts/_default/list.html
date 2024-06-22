@@ -45,7 +45,7 @@
     	<dt><a class="u-url p-name" href="{{ .Permalink }}">{{ .Title }}</a> ◊ <time class="dt-published" datetime="{{ .Date.Format "2006-01-02 15:04:05 -0700" }}">{{ .Date.Format "Jan 2, 2006" }}</time></dt>
       {{- if .Page.Params.categories -}}
   			{{- range $index, $category := .Page.Params.categories -}}
-					{{ if eq .Title $title }}
+					{{ if eq $category $title }}
 					{{ else }}
 	   				&nbsp;◊&nbsp;<a class="subheading" href="/categories/{{ $category | anchorize }}/">#{{ $category }}</a>
 					{{ end }}
