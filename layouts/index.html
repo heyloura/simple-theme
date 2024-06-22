@@ -21,6 +21,10 @@
 	{{ if gt (len $list) 0 }}
 		{{ range $list }}
 	    		{{ if eq .Title "newsletter" }}
+	    		{{ else if eq .Title "app defaults" }}
+	    		{{ else if eq .Title "change log" }}
+	    		{{ else if eq .Title "timeline" }}
+	    		{{ else if eq .Title "video" }}
 	    		{{ else }}
 			<li><a href="{{ .Permalink }}">{{ strings.FirstUpper .Title }}</a></li>
 	    		{{ end }}
