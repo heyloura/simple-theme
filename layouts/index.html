@@ -40,22 +40,15 @@
 	</p>
 	<p>You can also strike up a <a href="/replies">conversation</a> on <a href="https://micro.blog/heyloura">micro.blog</a> or on the fediverse at <a href="https://micro.blog/heyloura?remote_follow=1">@heyloura@heyloura.com</a></p>
 	<p>Yours truly, <a rel="author" class="p-author h-card" href="/">Loura</a></p>
-	<dl>
 	{{ $paginator := .Paginate (where .Site.Pages.ByDate.Reverse "Type" "post") (index .Site.Params "archive-paginate" | default 20) }}
 	{{ range $paginator.Pages  }}
 		{{ if .Page.Params.categories }}
 		{{ else }}
 		{{ if .Title }}
-			<article class="h-entry">
+			<dl class="h-entry">
 				<dt>
-					<a href="{{ .Permalink }}" class="u-url p-name"> {{ .Title }} 
-						
-					</a> ◊ <time class="dt-published" datetime="{{ .Date.Format "2006-01-02 15:04:05 -0700" }}">{{ .Date.Format "Jan 2, 2006" }}</time>
-					{{- if .Page.Params.categories -}}
-						{{- range $index, $category := .Page.Params.categories -}}
-						 ◊ <a class="p-category" href="/categories/{{ $category | anchorize }}/">#{{ $category }}</a> 
-						{{- end -}}
-					{{- end -}}
+					<a href="{{ .Permalink }}" class="u-url p-name"> {{ .Title }} </a> ◊ <time class="dt-published" datetime="{{ .Date.Format "2006-01-02 15:04:05 -0700" }}">{{ .Date.Format "Jan 2, 2006" }}</time>
+					<span data-id="{{ .RelPermalink }}"></span>
 				</dt>
 				{{ if in .RawContent "<!--more-->" }}
 				<dd class="p-summary">
@@ -73,25 +66,42 @@
 				    {{ .Content }}
 				</dd>
 			    {{ end }}
-			</article>
+			</dl>
 		{{ else }}
-			<article class="h-entry">
+			<dl class="h-entry">
 				<dt>
 					<a href="{{ .Permalink }}" class="u-url">
 						<time class="dt-published" datetime="{{ .Date.Format "2006-01-02 15:04:05 -0700" }}">{{ .Date.Format "Jan 2, 2006" }}</time>
 					</a>
-					{{- if .Page.Params.categories -}}
-						{{- range $index, $category := .Page.Params.categories -}}
-						 ◊ <a class="p-category" href="/categories/{{ $category | anchorize }}/">#{{ $category }}</a> 
-						{{- end -}}
-					{{- end -}}
+					<span data-id="{{ .RelPermalink }}"></span>
 				</dt>
 				<dd class="e-content">{{ .Content }}</dd>
-			</article>
+			</dl>
 		{{ end }}
+
+		<script>
+		  fetch('https://micro.blog/conversation.js?format=jsonfeed&url=https%3A%2F%2Fheyloura.com' + encodeURIComponent('{{ .RelPermalink }}'))
+		  .then(response => response.json())
+		  .then(conversation => {
+		    const repliesLink = document.querySelector('[data-id="{{ .RelPermalink }}"]');
+		    if(conversation.items.length > 0) {
+		        let postA = document.createElement('a');
+		        postA.setAttribute("href", '{{ .RelPermalink }}#conversation');
+		        postA.innerHTML = '◊ ' + conversation.items.length + ' conversations';
+		        //repliesLink.style.display = 'inline-block';
+		        repliesLink.prepend(postA);
+		        //repliesLink.innerText = '💬' + conversation.items.length;
+		    } else {
+		        repliesLink.remove()
+		    }
+		  })
+		  .catch((error) => {
+		    // TODO: nothing for now…
+		  });
+		</script>
+	
 		{{ end }}
 	{{ end }}
-  </dl>
 	{{ $pag := $.Paginator }}
 	<nav>
 		{{ if $pag.HasPrev }}
