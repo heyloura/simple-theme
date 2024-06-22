@@ -2,7 +2,7 @@
 	<header><h2>I'm interested in {{ .Title }}.</h2></header>
 	<p>
 		Here you can find some ideas or thoughts I had or maybe a picture, bookmark, or book that I found.
-		Wanna chat about {{ .Title }}? Click on the hyperlink and join the conversation o(*￣︶￣*)o or messege me on
+		Wanna chat about {{ .Title }}? Click on its hyperlink and join the conversation []~(￣▽￣)~* or messege me on
 		<a href="https://micro.blog/heyloura">micro.blog</a> or on the fediverse at <a href="https://micro.blog/heyloura?remote_follow=1">@heyloura@heyloura.com</a>
 	</p>
 	<p>Yours truly, <a rel="author" class="p-author h-card" href="/">Loura</a></p>
@@ -36,32 +36,25 @@
 			</section>
 		<hr/>
 {{ end }}
-
-
+  {{- $title := .Title -}}
 	{{ $paginator := .Paginate (where .Pages.ByDate.Reverse "Type" "post") (index .Site.Params "archive-paginate" | default 25) }}
-
-        <h3 class="heading">{{ strings.FirstUpper .Title }} Posts</h3>
-       <hr/>
-      <section>
-                  <ul id="posts" class="posts">
+  <section>
 	{{ range $paginator.Pages  }}
-
 		{{ if .Title }}
-			<li style="margin:0;"><p>
-              <small><time class="dt-published" datetime="{{ .Date.Format "2006-01-02 15:04:05 -0700" }}">{{ .Date.Format "Jan 2, 2006" }}</time></small><br/><a class="u-url p-name" href="{{ .Permalink }}">{{ .Title }}</a>
-             {{- if .Page.Params.categories -}}
-  {{- range $index, $category := .Page.Params.categories -}}
-   <a class="subheading" href="/categories/{{ $category | anchorize }}/">#{{ $category }}</a>
-  {{- end -}}
-{{- end -}}
-         </p></li>
+		<dl class="h-entry">
+    	<dt><a class="u-url p-name" href="{{ .Permalink }}">{{ .Title }}</a> ◊ <time class="dt-published" datetime="{{ .Date.Format "2006-01-02 15:04:05 -0700" }}">{{ .Date.Format "Jan 2, 2006" }}</time></dt>
+      {{- if .Page.Params.categories -}}
+  			{{- range $index, $category := .Page.Params.categories -}}
+					{{ if eq .Title $title }}
+					{{ else }}
+	   				&nbsp;◊&nbsp;<a class="subheading" href="/categories/{{ $category | anchorize }}/">#{{ $category }}</a>
+					{{ end }}
+  			{{- end -}}
+			{{- end -}}
+    </dl>
 		{{ end }}
-
-{{ end }}
-
-  </ul>
-      </section>
-      <hr/>
+	{{ end }}
+  </section>
 
 
 	{{ $paginator := .Paginate (where .Pages.ByDate.Reverse "Type" "post") (index .Site.Params "archive-paginate" | default 25) }}
