@@ -87,10 +87,11 @@
 		    if(conversation.items.length > 0) {
 		        let postA = document.createElement('a');
 		        postA.setAttribute("href", '{{ .RelPermalink }}#conversation');
-		        postA.innerHTML = '◊ ' + conversation.items.length + ' conversations';
-		        //repliesLink.style.display = 'inline-block';
-		        repliesLink.prepend(postA);
-		        //repliesLink.innerText = '💬' + conversation.items.length;
+		        postA.innerHTML =  conversation.items.length + (conversation.items.length == 1 ? ' comment' : ' comments');
+			let postSpan = document.createElement('span');
+			postSpan.innerHTML = '◊ ';
+		        repliesLink.prepend(postSpan);
+			repliesLink.prepend(postA);
 		    } else {
 		        repliesLink.remove()
 		    }
