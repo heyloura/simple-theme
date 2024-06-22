@@ -20,7 +20,10 @@
 	{{ $list := ($.Site.GetPage "taxonomyTerm" "categories").Pages }}
 	{{ if gt (len $list) 0 }}
 		{{ range $list }}
-			<li><a href="{{ .Permalink }}">{{ .Title }}</a></li>
+	    		{{ if eq .Title "newsletter" }}
+	    		{{ else }}
+			<li><a href="{{ .Permalink }}">{{ strings.FirstUpper .Title }}</a></li>
+	    		{{ end }}
 		{{ end }}
 	{{ end }}
     </ol>
