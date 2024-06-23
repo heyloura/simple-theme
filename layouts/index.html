@@ -28,7 +28,7 @@
 	    		{{ else }}
 			<li>
 				<a href="{{ .Permalink }}">{{ strings.FirstUpper .Title }}</a>
-				{{ range where .Site.Pages.ByDate.Reverse "Type" "post" 1  }}
+				{{ range where .Site.Pages.ByDate.Reverse "Type" "post" 10  }}
 				◊ Last updated: {{ .Date.Format "Jan 2, 2006" }}
 				{{ end }}
 			</li>
