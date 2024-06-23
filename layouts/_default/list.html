@@ -63,7 +63,8 @@
 				</dd>
 			{{ else }}
 					<dd class="e-content">
-							{{ .Content | safeHTML | truncate 400 }}
+						{{ .Content | safeHTML | truncate 300 }}
+						<p><a href="{{ .Permalink }}">Read More →</a></p>
 					</dd>
 			{{ end }}
 			</dl>
