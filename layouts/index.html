@@ -30,7 +30,7 @@
 	    		{{ else }}
 			<li>
 				<a href="{{ .Permalink }}">{{ strings.FirstUpper .Title }}</a>&nbsp;◊&nbsp;
-				<div  class="dates">
+				<span class="dates">
 				{{ range where .Site.Pages.ByDate.Reverse "Type" "post"  }}
 					{{ $postDate := .Date.Format "Jan 2, 2006" }}
 					{{- range $index, $category := .Page.Params.categories -}}
@@ -39,7 +39,7 @@
 						{{ end }}
 	  				{{- end -}}
 				{{ end }}
-				</div>
+				</span>
 			</li>
 	    		{{ end }}
 		{{ end }}
