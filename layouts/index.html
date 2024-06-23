@@ -16,6 +16,7 @@
         be a quick note or a longer musing. Sometimes I attach photos/screenshots, books I've read, or
         I'll bookmark something on the web. Take a look:
     </p>
+    <style>.category > span:not(:first-child) { display: none; }</style>
     <ol>
 	{{ $list := ($.Site.GetPage "taxonomyTerm" "categories").Pages }}
 	{{ if gt (len $list) 0 }}
@@ -28,13 +29,12 @@
 	    		{{ else if eq .Title "video" }}
 	    		{{ else }}
 			<li class="category">
-				<a href="{{ .Permalink }}">{{ strings.FirstUpper .Title }}</a>
+				<a href="{{ .Permalink }}">{{ strings.FirstUpper .Title }}</a>&nbsp;◊&nbsp;
 				{{ range where .Site.Pages.ByDate.Reverse "Type" "post"  }}
 					{{ $postDate := .Date.Format "Jan 2, 2006" }}
 					{{- range $index, $category := .Page.Params.categories -}}
 						{{ if eq $category $categoryTitle }}
-						{{ else }}
-		   				&nbsp;◊&nbsp;<span>Last updated: {{ $postDate }}</span>
+							<span>Last updated: {{ $postDate }}</span>
 						{{ end }}
 	  				{{- end -}}
 				{{ end }}
