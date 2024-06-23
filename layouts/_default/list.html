@@ -42,17 +42,34 @@
 	{{ range $paginator.Pages  }}
 		{{ if .Title }}
 		<dl class="h-entry">
-    	<dt><a class="u-url p-name" href="{{ .Permalink }}">{{ .Title }}</a> ◊ <time class="dt-published" datetime="{{ .Date.Format "2006-01-02 15:04:05 -0700" }}">{{ .Date.Format "Jan 2, 2006" }}</time></dt>
-      {{- if .Page.Params.categories -}}
+    	<dt><a class="u-url p-name" href="{{ .Permalink }}">{{ .Title }}</a> ◊ <time class="dt-published" datetime="{{ .Date.Format "2006-01-02 15:04:05 -0700" }}">{{ .Date.Format "Jan 2, 2006" }}</time>
   			{{- range $index, $category := .Page.Params.categories -}}
 					{{ if eq $category $title }}
 					{{ else }}
 	   				&nbsp;◊&nbsp;<a class="subheading" href="/categories/{{ $category | anchorize }}/">#{{ $category }}</a>
 					{{ end }}
   			{{- end -}}
-			{{- end -}}
-    </dl>
-		{{ end }}
+			</dt>
+			{{ if in .RawContent "<!--more-->" }}
+				<dd class="p-summary">
+						<p>
+						{{ $splitContents := split .RawContent "<!--more-->" }}
+						{{ $summary := index $splitContents 0 }}
+						{{ $summary := replaceRE "\\[\\^.*?\\]" "" $summary }}
+						{{ $summary := replaceRE "\\n\\[\\^.*?\\]:.*" "" $summary }}
+						{{ $summary | markdownify }}
+						</p>
+						<p><a href="{{ .Permalink }}">Read More →</a></p>
+				</dd>
+			{{ else }}
+					<dd class="e-content">
+							{{ .Content }}
+					</dd>
+			{{ end }}
+			</dl>
+		{{- end -}}
+    
+	{{ end }}
 	{{ end }}
   </section>
 
