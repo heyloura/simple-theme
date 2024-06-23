@@ -31,7 +31,7 @@
 				<a href="{{ .Permalink }}">{{ strings.FirstUpper .Title }}</a>
 				{{ range where .Site.Pages.ByDate.Reverse "Type" "post"  }}
 					{{- range $index, $category := .Page.Params.categories -}}
-						{{ if eq $category $title }}
+						{{ if eq $category $categoryTitle }}
 						{{ else }}
 		   				&nbsp;◊&nbsp;Last updated: {{ .Date.Format "Jan 2, 2006" }}
 						{{ end }}
