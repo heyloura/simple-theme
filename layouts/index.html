@@ -27,13 +27,14 @@
 	    		{{ else if eq .Title "timeline" }}
 	    		{{ else if eq .Title "video" }}
 	    		{{ else }}
-			<li>
+			<li class="category">
 				<a href="{{ .Permalink }}">{{ strings.FirstUpper .Title }}</a>
 				{{ range where .Site.Pages.ByDate.Reverse "Type" "post"  }}
+					{{ $postDate := .Date.Format "Jan 2, 2006" }}
 					{{- range $index, $category := .Page.Params.categories -}}
 						{{ if eq $category $categoryTitle }}
 						{{ else }}
-		   				&nbsp;◊&nbsp;Last updated: {{ .Date.Format "Jan 2, 2006" }}
+		   				&nbsp;◊&nbsp;<span>Last updated: {{ $postDate }}</span>
 						{{ end }}
 	  				{{- end -}}
 				{{ end }}
