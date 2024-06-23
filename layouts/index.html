@@ -16,7 +16,7 @@
         be a quick note or a longer musing. Sometimes I attach photos/screenshots, books I've read, or
         I'll bookmark something on the web. Take a look:
     </p>
-    <style>.category > span:not(:first-child) { display: none; }</style>
+    <style>.category span { display: none; } .category span:first-child { display: inline-block; }</style>
     <ol>
 	{{ $list := ($.Site.GetPage "taxonomyTerm" "categories").Pages }}
 	{{ if gt (len $list) 0 }}
