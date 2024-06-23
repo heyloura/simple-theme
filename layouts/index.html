@@ -26,7 +26,12 @@
 	    		{{ else if eq .Title "timeline" }}
 	    		{{ else if eq .Title "video" }}
 	    		{{ else }}
-			<li><a href="{{ .Permalink }}">{{ strings.FirstUpper .Title }}</a></li>
+			<li>
+				<a href="{{ .Permalink }}">{{ strings.FirstUpper .Title }}</a>
+				{{ range where .Site.Pages.ByDate.Reverse "Type" "post" 1  }}
+				◊ Last updated: {{ .Date.Format "Jan 2, 2006" }}
+				{{ end }}
+			</li>
 	    		{{ end }}
 		{{ end }}
 	{{ end }}
