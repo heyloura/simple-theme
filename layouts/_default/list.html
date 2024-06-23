@@ -63,7 +63,7 @@
 				</dd>
 			{{ else }}
 					<dd class="e-content">
-							{{ .Content }}
+							{{ .Content | safeHTML | truncate 400 }}
 					</dd>
 			{{ end }}
 			</dl>
