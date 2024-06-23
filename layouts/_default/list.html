@@ -6,6 +6,7 @@
 		<a href="https://micro.blog/heyloura">micro.blog</a> or on the fediverse at <a href="https://micro.blog/heyloura?remote_follow=1">@heyloura@heyloura.com</a>
 	</p>
 	<p>Yours truly, <a rel="author" class="p-author h-card" href="/">Loura</a></p>
+	<img style="display:block;margin: 0px auto;" width="562" height="19" src="https://web.archive.org/web/20090803140922im_/http://hk.geocities.com/radio_monster/starsln.gif" />
 {{ if eq .Title "homeschooling" }}
 <section>
 			<h2 id="planning-20232024">Planning 2023/2024</h2>
@@ -46,7 +47,7 @@
   			{{- range $index, $category := .Page.Params.categories -}}
 					{{ if eq $category $title }}
 					{{ else }}
-	   				&nbsp;◊&nbsp;<a class="subheading" href="/categories/{{ $category | anchorize }}/">#{{ $category }}</a>
+	   				◊&nbsp;<a class="subheading" href="/categories/{{ $category | anchorize }}/">#{{ $category }}</a>
 					{{ end }}
   			{{- end -}}
 			</dt>
