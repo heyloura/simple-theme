@@ -20,6 +20,7 @@
 	{{ $list := ($.Site.GetPage "taxonomyTerm" "categories").Pages }}
 	{{ if gt (len $list) 0 }}
 		{{ range $list }}
+	    		{{ $categoryTitle := .Title }}
 	    		{{ if eq .Title "newsletter" }}
 	    		{{ else if eq .Title "app defaults" }}
 	    		{{ else if eq .Title "change log" }}
@@ -28,8 +29,13 @@
 	    		{{ else }}
 			<li>
 				<a href="{{ .Permalink }}">{{ strings.FirstUpper .Title }}</a>
-				{{ range where .Site.Pages.ByDate.Reverse "Type" "post" 10  }}
-				◊ Last updated: {{ .Date.Format "Jan 2, 2006" }}
+				{{ range where .Site.Pages.ByDate.Reverse "Type" "post"  }}
+					{{- range $index, $category := .Page.Params.categories -}}
+						{{ if eq $category $title }}
+						{{ else }}
+		   				&nbsp;◊&nbsp;Last updated: {{ .Date.Format "Jan 2, 2006" }}
+						{{ end }}
+	  				{{- end -}}
 				{{ end }}
 			</li>
 	    		{{ end }}
