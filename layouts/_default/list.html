@@ -14,36 +14,6 @@
 	      loading="lazy"
 	      onload="disappear(this)"></iframe>
 
-{{ if eq .Title "homeschooling" }}
-<section>
-			<h2 id="planning-20232024">Planning 2023/2024</h2>
-<p>Looks like next year will be just my son. My daughter is super excited to try out our local public school for sixth grade. I’m currently brainstorming about what to use for my son’s 8th grade year and getting him ready to launch into high school.</p>
-<p><a href="https://heyloura.com/eighth-grade-for-2023-2024/">Eighth Grade for 2023/2024</a></p>
-<h2 id="past-grades">Past Grades</h2>
-<ul>
-<li><a href="/seventh-grade-for-2022-2023">Seventh Grade for 2022/2023</a></li>
-<li><a href="/fifth-grade-for-2022-2023/">Fifth Grade for 2022/2023</a></li>
-</ul>
-			</section><hr/>
-{{end}}
-{{ if eq .Title "tai chi" }}
-<section>
-        <h2>Meditation in Motion</h2>
-<blockquote style="padding-left: var(--space-xs-s);border-left: 1px solid var(--text);">
-<p>Tai Chi, imagination becomes reality.</p>
-<p>Sifu Jamie</p>
-</blockquote>
-<h3 id="warm-ups-and-basic-exercises">Warm ups and Basic Exercises</h3>
-<ul>
-<li><a href="/tai-chi/eight-silk-brocades/">Qi Gong - Eight Silk Brocades</a></li>
-</ul>
-<h3 id="forms">Forms</h3>
-<ul>
-<li><a href="/tai-chi/long-yang">Traditional Yang Tai Chi 108 Movement Long Form</a></li>
-</ul>
-			</section>
-		<hr/>
-{{ end }}
   {{- $title := .Title -}}
 	{{ $paginator := .Paginate (where .Pages.ByDate.Reverse "Type" "post") (index .Site.Params "archive-paginate" | default 25) }}
   <section class="h-feed">
