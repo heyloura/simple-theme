@@ -123,8 +123,10 @@ for(let child of children) {
     frame.before(child);
   }
   else {
-	console.log(child);
-    frame.before(child);
+    var content = child.getElementById('post-content');
+	  if(content) {
+		frame.before(child);
+	  }
   }
 }
 
