@@ -123,9 +123,12 @@ for(let child of children) {
     frame.before(child);
   }
   else {
-    var content = child.getElementById('post-content');
-	  if(content) {
-		frame.before(child);
+	  let subchildren = [...child.children]
+	  for(let subchild of subchildren) {
+		  console.log(subchild);
+		  if(subchild.tagName === 'ARTICLE') {
+			frame.before(subchild);
+		  }
 	  }
   }
 }
