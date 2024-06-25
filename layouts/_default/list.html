@@ -1,7 +1,7 @@
 {{ define "main" }}
        <header>
 	       <h1 style="display:inline-block">{{ strings.FirstUpper .Title }}</h1>
-       	       <nav style="display:inline-block"> <a href="#intro">into</a> ⚓ <a href="#posts">posts</a> ⚓ <a href="#photos">photos</a> ⚓ <a href="#bookmarks">bookmarks</a> ⚓ <a href="#books">books</a></nav>
+       	       <nav style="display:inline-block"> ⚓ <a href="#intro">into</a> ⚓ <a href="#posts">posts</a> ⚓ <a href="#photos">photos</a> ⚓ <a href="#bookmarks">bookmarks</a> ⚓ <a href="#books">books</a></nav>
        </header>
 	<img id="intro" style="display:block;margin: 0px auto;" width="562" height="19" src="https://web.archive.org/web/20091027102121/http://hk.geocities.com/footprints_kayi/border.gif" />
 	<iframe aria-busy="true"
@@ -18,12 +18,12 @@
 	</p>
 	<p>Yours truly, <a rel="author" class="p-author h-card" href="/">Loura</a></p>
 	<img style="display:block;margin: 0px auto;" width="562" height="19" src="https://web.archive.org/web/20091027102121/http://hk.geocities.com/footprints_kayi/border.gif" />
-
+      <header id="posts"><h2>{{ strings.FirstUpper .Title }} Posts</h2></header>
   {{- $title := .Title -}}
 	{{ $paginator := .Paginate (where .Pages.ByDate.Reverse "Type" "post") (index .Site.Params "archive-paginate" | default 10) }}
-  <section class="h-feed">
+  <section  class="h-feed">
 	{{ range $paginator.Pages  }}
-		<dl id="posts" class="h-entry">
+		<dl  class="h-entry">
     			<dt>
 						{{ if .Title }}
 							<a class="u-url p-name" href="{{ .Permalink }}">{{ .Title }}</a> ◊ <time class="dt-published" datetime="{{ .Date.Format "2006-01-02 15:04:05 -0700" }}">{{ .Date.Format "Jan 2, 2006" }}</time>
@@ -96,7 +96,7 @@
 		{{ end }}
 	</nav>
 
-	<header><h2>Photobook</h2></header>
+	<header id="photos"><h2>Photos</h2></header>
 	{{- $list := where .Pages ".Params.photos" "!=" nil -}}
 	{{- $len := (len $list) -}}
 			<section>
@@ -113,7 +113,7 @@
 				</div>
       </section>
 
-<header><h2>Bookmarks</h2></header>
+<header id="bookmarks"><h2>Bookmarks</h2></header>
 <section>
 {{ $feed_url := $.Site.Params.feeds.bookmarks_json }}
 {{ $response := getJSON $feed_url }}
@@ -128,26 +128,12 @@
 {{ end }}
 {{ $tags = uniq $tags }}
 
-
-<p class="heading"><small>
-{{ range sort $tags }}
-    {{ $tag := . }}
-    {{ if not (eq $tag "") }}
- 
-   <a href="#{{ $tag }}">{{ $tag }}</a>
-
-    {{ end }}
-{{ end }}
-</small></p>
-
-<ul style="list-style:none;margin:0;padding:0;" class="posts">
-
 {{ range sort $tags }}
     {{ $tag := . }}
 
-    {{ if not (eq $tag "") }}
+    {{ if eq $tag .Title }}
 
-    <li id="{{ $tag }}"><h3 class="item-title">{{ $tag }}</h3><ul>
+   <ul>
    {{ range $response.items }}
    {{ $url := urls.Parse .url }}
      {{ if not (hasPrefix .id "link") }}
@@ -162,7 +148,7 @@
         {{ end }}
      {{ end }}
     {{ end }}
-    </ul></li>
+    </ul>
 
     {{ end }}
 
@@ -170,7 +156,7 @@
 
 {{ end }}
 
-      </ul> </section>
+</section>
 
 
 <script>
