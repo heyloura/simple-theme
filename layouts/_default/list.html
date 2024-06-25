@@ -117,6 +117,7 @@
 <section>
 {{ $feed_url := $.Site.Params.feeds.bookmarks_json }}
 {{ $response := getJSON $feed_url }}
+{{ $title := .Title }}
 
 {{ if isset $response "items" }}
 
@@ -131,7 +132,7 @@
 {{ range sort $tags }}
     {{ $tag := . }}
 
-    {{ if eq $tag .Title }}
+    {{ if eq $tag $title }}
 
    <ul>
    {{ range $response.items }}
