@@ -39,111 +39,65 @@
 {{ end }}
   {{- $title := .Title -}}
 	{{ $paginator := .Paginate (where .Pages.ByDate.Reverse "Type" "post") (index .Site.Params "archive-paginate" | default 25) }}
-  <section>
+  <section class="h-feed">
 	{{ range $paginator.Pages  }}
-		{{ if .Title }}
 		<dl class="h-entry">
-    	<dt><a class="u-url p-name" href="{{ .Permalink }}">{{ .Title }}</a> ◊ <time class="dt-published" datetime="{{ .Date.Format "2006-01-02 15:04:05 -0700" }}">{{ .Date.Format "Jan 2, 2006" }}</time>
+    			<dt>
+						{{ if .Title }}
+							<a class="u-url p-name" href="{{ .Permalink }}">{{ .Title }}</a> ◊ <time class="dt-published" datetime="{{ .Date.Format "2006-01-02 15:04:05 -0700" }}">{{ .Date.Format "Jan 2, 2006" }}</time>
+						{{ else }}
+							<a class="u-url p-name" href="{{ .Permalink }}"><time class="dt-published" datetime="{{ .Date.Format "2006-01-02 15:04:05 -0700" }}">{{ .Date.Format "Jan 2, 2006" }}</time></a>
+						{{ end }}
   			{{- range $index, $category := .Page.Params.categories -}}
 					{{ if eq $category $title }}
 					{{ else }}
 	   				◊&nbsp;<a class="subheading" href="/categories/{{ $category | anchorize }}/">#{{ $category }}</a>
 					{{ end }}
   			{{- end -}}
-			</dt>
-			{{ if in .RawContent "<!--more-->" }}
-				<dd class="p-summary">
-						<p>
-						{{ $splitContents := split .RawContent "<!--more-->" }}
-						{{ $summary := index $splitContents 0 }}
-						{{ $summary := replaceRE "\\[\\^.*?\\]" "" $summary }}
-						{{ $summary := replaceRE "\\n\\[\\^.*?\\]:.*" "" $summary }}
-						{{ $summary | markdownify }}
-						</p>
-						<p><a href="{{ .Permalink }}">Read More →</a></p>
+		</dt>
+		{{ if in .RawContent "<!--more-->" }}
+			<dd class="p-summary">
+					<p>
+					{{ $splitContents := split .RawContent "<!--more-->" }}
+					{{ $summary := index $splitContents 0 }}
+					{{ $summary := replaceRE "\\[\\^.*?\\]" "" $summary }}
+					{{ $summary := replaceRE "\\n\\[\\^.*?\\]:.*" "" $summary }}
+					{{ $summary | markdownify }}
+					</p>
+					<p><a href="{{ .Permalink }}">Read More →</a></p>
+			</dd>
+		{{ else }}
+				{{ if .Title }}
+				<dd class="e-content">
+					{{ .Content | safeHTML | truncate 300 }}
+					<p><a href="{{ .Permalink }}">Read More →</a></p>
 				</dd>
 			{{ else }}
-					<dd class="e-content">
-						{{ .Content | safeHTML | truncate 300 }}
-						<p><a href="{{ .Permalink }}">Read More →</a></p>
-					</dd>
+				<dd class="e-content">
+					{{ .Content }}
+				</dd>
 			{{ end }}
-			</dl>
-		{{- end -}}
+		{{ end }}
+		</dl>
 	{{ end }}
   </section>
 
-
-	{{ $paginator := .Paginate (where .Pages.ByDate.Reverse "Type" "post") (index .Site.Params "archive-paginate" | default 25) }}
-        <h3 id="ephemeral"  class="heading">{{ strings.FirstUpper .Title }} Ephemeral</h3>
-       <hr/>
-      <section>
-        <ul class="posts" style="padding:0;list-style-type: none;">
-	{{ range $paginator.Pages  }}
-
-		{{ if .Title }}
-        {{ else }}
-
-{{ $stringCheck := .Content }}
-		{{ $stringResult := substr $stringCheck 0 10 }}
-		{{ $image := ".jpg" }}
-        {{ $jpeg := ".jpeg" }}
-		{{ $video := "<video" }}
-		{{ $audio := "<audio" }}
-		{{ if in $stringCheck (or ($image) ($jpeg) ($video) ($audio)) }}
-        {{ else }}
-
-			<li><h3><small>
-<a href="{{ .Permalink }}" class="u-url">
-		<time class="dt-published" datetime="{{ .Date.Format "2006-01-02 15:04:05 -0700" }}" >
-			{{ .Date.Format "2 January 2006" }}
-		</time>
-	</a></small></h3>
-<div class="e-content">
-
-{{ .Content }}
-
-</div>
-
-             {{- if .Page.Params.categories -}}
-<p>
-  {{- range $index, $category := .Page.Params.categories -}}
-   <a class="subheading" href="/categories/{{ $category | anchorize }}/">#{{ $category }}</a>
-  {{- end -}}
-</p>
-{{- end -}}
-         </li>
-
-
-{{ end }}
-
-
-		{{ end }}
-
-        {{ end }}
-
-        </ul>
-      </section>
-<hr/>
-
+	<header><h2>Photobook</h2></header>
 	{{- $list := where .Pages ".Params.photos" "!=" nil -}}
 	{{- $len := (len $list) -}}
-<h3 class="heading">{{ strings.FirstUpper .Title }} Photos</h3>
-<hr/>
-<section>
-	<div class="photos-grid-container" style="display: grid; grid-column-gap: 15px; grid-row-gap: 15px; grid-template-columns: 33% 33% 33%;">
-
-	{{ range $index, $value := $list }}
-		<a href="{{ .Permalink }}">
-			{{ range first 1 .Params.photos }}
-				<img src="{{ . }}" width="300" height="300" style="border-radius: 5px; max-width: 100%; height: auto;" class="photos-grid-item" loading="lazy" />
-			{{ end }}
-		</a>
-	{{ end }}
-
-	</div>
+			<section>
+				<div class="photos-grid-container" style="display: grid; grid-column-gap: 15px; grid-row-gap: 15px; grid-template-columns: 33% 33% 33%;">
+			
+				{{ range $index, $value := $list }}
+					<a href="{{ .Permalink }}">
+						{{ range first 1 .Params.photos }}
+							<img src="{{ . }}" width="300" height="300" style="border-radius: 5px; max-width: 100%; height: auto;" class="photos-grid-item" loading="lazy" />
+						{{ end }}
+					</a>
+				{{ end }}
+			
+				</div>
       </section>
-      <hr/>
 
 
 
