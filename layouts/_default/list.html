@@ -1,5 +1,8 @@
 {{ define "main" }}
-       <header><h12>{{ strings.FirstUpper .Title }}</h1></header>
+       <header>
+	       <h1>{{ strings.FirstUpper .Title }}</h1>
+       		<nav><a href="#posts">posts</a></nav>
+       </header>
 	<img style="display:block;margin: 0px auto;" width="562" height="19" src="https://web.archive.org/web/20091027102121/http://hk.geocities.com/footprints_kayi/border.gif" />
 	<iframe aria-busy="true"
 	      id="main_calendar"
@@ -20,7 +23,7 @@
 	{{ $paginator := .Paginate (where .Pages.ByDate.Reverse "Type" "post") (index .Site.Params "archive-paginate" | default 25) }}
   <section class="h-feed">
 	{{ range $paginator.Pages  }}
-		<dl class="h-entry">
+		<dl id="posts" class="h-entry">
     			<dt>
 						{{ if .Title }}
 							<a class="u-url p-name" href="{{ .Permalink }}">{{ .Title }}</a> ◊ <time class="dt-published" datetime="{{ .Date.Format "2006-01-02 15:04:05 -0700" }}">{{ .Date.Format "Jan 2, 2006" }}</time>
@@ -85,10 +88,10 @@
   </section>
 
 	<nav>
-		{{ if $pag.HasPrev }}
+		{{ if $paginator.HasPrev }}
 			<a rel='prev' href='{{ $pag.Prev.URL }}' title='Previous Page'>← Newer Posts</a>
 		{{ end }}
-		{{ if $pag.HasNext }}
+		{{ if $paginator.HasNext }}
 			<a rel='next' href='{{ $pag.Next.URL }}'>Older Posts →</a>
 		{{ end }}
 	</nav>
@@ -109,6 +112,65 @@
 			
 				</div>
       </section>
+
+<header><h2>Bookmarks</h2></header>
+<section>
+{{ $feed_url := $.Site.Params.feeds.bookmarks_json }}
+{{ $response := getJSON $feed_url }}
+
+{{ if isset $response "items" }}
+
+{{ $tags := slice }}
+{{ range $response.items }}
+ {{ if not (hasPrefix .id "link") }}
+    {{ $tags = $tags | append (split .tags ", ") }}
+ {{ end }}
+{{ end }}
+{{ $tags = uniq $tags }}
+
+
+<p class="heading"><small>
+{{ range sort $tags }}
+    {{ $tag := . }}
+    {{ if not (eq $tag "") }}
+ 
+   <a href="#{{ $tag }}">{{ $tag }}</a>
+
+    {{ end }}
+{{ end }}
+</small></p>
+
+<ul style="list-style:none;margin:0;padding:0;" class="posts">
+
+{{ range sort $tags }}
+    {{ $tag := . }}
+
+    {{ if not (eq $tag "") }}
+
+    <li id="{{ $tag }}"><h3 class="item-title">{{ $tag }}</h3><ul>
+   {{ range $response.items }}
+   {{ $url := urls.Parse .url }}
+     {{ if not (hasPrefix .id "link") }}
+        {{ if strings.Contains .tags $tag }}
+                <li><figure style="margin: var(--space-m) 0;">
+        <figcaption><cite><a target="_blank" class="u-bookmark-of" href="{{ .url }}">{{ $url.Host }}</a><br/><small>Bookmarked: {{ time.Format "Jan 2, 2006" .date_published}}</small></cite></figcaption>
+        <blockquote style="padding-left: var(--space-s);border-left: 1px solid var(--text)">
+          <p>{{ replace (replace ( .content_html | plainify | truncate 300 ) "Reader: " "") $url.Host "" }}</p>
+        </blockquote>
+
+      </figure></li>
+        {{ end }}
+     {{ end }}
+    {{ end }}
+    </ul></li>
+
+    {{ end }}
+
+{{ end }}
+
+{{ end }}
+
+      </ul> </section>
 
 
 <script>
