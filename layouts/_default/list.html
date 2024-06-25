@@ -30,9 +30,10 @@
   			{{- range $index, $category := .Page.Params.categories -}}
 					{{ if eq $category $title }}
 					{{ else }}
-	   				◊&nbsp;<a class="subheading" href="/categories/{{ $category | anchorize }}/">#{{ $category }}</a>
+	   				◊&nbsp;<a class="subheading" href="/categories/{{ $category | anchorize }}/">#{{ $category }}</a> 
 					{{ end }}
   			{{- end -}}
+				<span data-id="{{ .RelPermalink }}"></span>
 		</dt>
 		{{ if in .RawContent "<!--more-->" }}
 			<dd class="p-summary">
@@ -58,8 +59,39 @@
 			{{ end }}
 		{{ end }}
 		</dl>
+
+	  		<script>
+		  fetch('https://micro.blog/conversation.js?format=jsonfeed&url=https%3A%2F%2Fheyloura.com' + encodeURIComponent('{{ .RelPermalink }}'))
+		  .then(response => response.json())
+		  .then(conversation => {
+		    const repliesLink = document.querySelector('[data-id="{{ .RelPermalink }}"]');
+		    if(conversation.items.length > 0) {
+		        let postA = document.createElement('a');
+		        postA.setAttribute("href", '{{ .RelPermalink }}#conversation');
+		        postA.innerHTML =  conversation.items.length + (conversation.items.length == 1 ? ' comment' : ' comments');
+			let postSpan = document.createElement('span');
+			postSpan.innerHTML = '◊ ';
+		        repliesLink.prepend(postA);
+			repliesLink.prepend(postSpan);
+		    } else {
+		        repliesLink.remove()
+		    }
+		  })
+		  .catch((error) => {
+		    // TODO: nothing for now…
+		  });
+		</script>
 	{{ end }}
   </section>
+
+	<nav>
+		{{ if $pag.HasPrev }}
+			<a rel='prev' href='{{ $pag.Prev.URL }}' title='Previous Page'>← Newer Posts</a>
+		{{ end }}
+		{{ if $pag.HasNext }}
+			<a rel='next' href='{{ $pag.Next.URL }}'>Older Posts →</a>
+		{{ end }}
+	</nav>
 
 	<header><h2>Photobook</h2></header>
 	{{- $list := where .Pages ".Params.photos" "!=" nil -}}
