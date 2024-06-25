@@ -1,0 +1,40 @@
+{{ define "main" }}
+
+  {{ if .Title }}
+  <header class="p-name"><h2>{{ .Title }}</h2></header>
+  {{ end }}
+
+  {{ if .Params.reply_to_url }} 
+    <a href="{{ .Permalink }}" class="u-url">
+      <time class="dt-published" datetime="{{ .Date.Format "2006-01-02 15:04:05 -0700" }}">{{ .Date.Format "Jan 2, 2006" }}</time>
+    </a>
+    <div class="reply-to"> Replying to: {{ if eq .Params.reply_to_hostname "micro.blog" }} <a href="{{ .Params.reply_to_url }}" class="u-in-reply-to">@{{ .Params.reply_to_username }}</a> {{ else }} <a href="{{ .Params.reply_to_url }}" class="u-in-reply-to">{{ .Params.reply_to_hostname }}</a> {{ end }} </div> 
+  {{ end }}
+
+  <article>
+    {{ .Content }}
+  </article>
+
+<script>
+// when everything is loaded
+// set up an identifier so we have something to scope off of.
+document.addEventListener("DOMContentLoaded", (event) => {
+  let body = document.querySelector('body');
+  let uuid = window.frameElement.getAttribute('id') ?? self.crypto.randomUUID();
+  
+  for(let attr of window.frameElement.attributes)
+  {  
+    for (let child of body.children) { 
+      if(attr.name.includes('data-') && !attr.name.includes('data-scope')) {
+        child.setAttribute(attr.name, attr.value);
+      } 
+      if(!child.getAttribute('data-scope')) {
+        child.setAttribute('data-scope', uuid);
+      }
+    }
+  }
+});
+  
+</script>
+
+{{ end }}
