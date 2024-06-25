@@ -1,4 +1,12 @@
 {{ define "main" }}
+       <header><h2>{{ .Title }}</h2></header>
+	<img style="display:block;margin: 0px auto;" width="562" height="19" src="https://web.archive.org/web/20091027102121/http://hk.geocities.com/footprints_kayi/border.gif" />
+	<iframe aria-busy="true"
+	      id="main_calendar"
+	      src="/{{ replace (strings.ToLower .Title) ' ' '-' }}" 
+	      loading="lazy"
+	      onload="disappear(this)"></iframe>
+
 	<header><h2>Dear Internet,</h2></header>
 	<p>
 		Here you can find some ideas or thoughts I had or maybe a picture, bookmark, or book that I found.
@@ -6,13 +14,7 @@
 		<a href="https://micro.blog/heyloura">micro.blog</a> or on the fediverse at <a href="https://micro.blog/heyloura?remote_follow=1">@heyloura@heyloura.com</a>
 	</p>
 	<p>Yours truly, <a rel="author" class="p-author h-card" href="/">Loura</a></p>
-	<img style="display:block;margin: 0px auto;" width="562" height="19" src="https://web.archive.org/web/20090803140922im_/http://hk.geocities.com/radio_monster/starsln.gif" />
-
-	<iframe aria-busy="true"
-	      id="main_calendar"
-	      src="/{{ replace (strings.ToLower .Title) ' ' '-' }}" 
-	      loading="lazy"
-	      onload="disappear(this)"></iframe>
+	<img style="display:block;margin: 0px auto;" width="562" height="19" src="https://web.archive.org/web/20091027102121/http://hk.geocities.com/footprints_kayi/border.gif" />
 
   {{- $title := .Title -}}
 	{{ $paginator := .Paginate (where .Pages.ByDate.Reverse "Type" "post") (index .Site.Params "archive-paginate" | default 25) }}
