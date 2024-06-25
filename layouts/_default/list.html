@@ -7,6 +7,13 @@
 	</p>
 	<p>Yours truly, <a rel="author" class="p-author h-card" href="/">Loura</a></p>
 	<img style="display:block;margin: 0px auto;" width="562" height="19" src="https://web.archive.org/web/20090803140922im_/http://hk.geocities.com/radio_monster/starsln.gif" />
+
+	<iframe aria-busy="true"
+	      id="main_calendar"
+	      src="/{{ replace (strings.ToLower .Title) ' ' '-' }}" 
+	      loading="lazy"
+	      onload="disappear(this)"></iframe>
+
 {{ if eq .Title "homeschooling" }}
 <section>
 			<h2 id="planning-20232024">Planning 2023/2024</h2>
