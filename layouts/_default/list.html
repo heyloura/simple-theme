@@ -1,6 +1,6 @@
 {{ define "main" }}
        <header>
-	       <h1 style="display:inline-block">{{ strings.FirstUpper .Title }}</h1>
+	       <h3 style="display:inline-block">{{ strings.FirstUpper .Title }}</h3>
        	       <nav style="display:inline-block"> ⚓ <a href="#intro">into</a> ⚓ <a href="#posts">posts</a> ⚓ <a href="#photos">photos</a> ⚓ <a href="#bookmarks">bookmarks</a> ⚓ <a href="#books">books</a></nav>
        </header>
 	<img id="intro" style="display:block;margin: 0px auto;" width="562" height="19" src="https://web.archive.org/web/20091027102121/http://hk.geocities.com/footprints_kayi/border.gif" />
@@ -203,7 +203,7 @@ h3.bookshelf__title {
 }
 		
 	</style>
-	{{ $bookshelf := .Title ) }}
+	{{ $bookshelf := .Title  }}
 
 <ul class="bookshelf bookshelf--variant-grid">
   {{ range (index .Site.Data.bookshelves $bookshelf) }}
