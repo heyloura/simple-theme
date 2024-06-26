@@ -159,6 +159,72 @@
 
 </section>
 
+<section>
+	<header id="books"><h2>Books</h2></header>
+	<style>
+/**
+Reset
+**/
+
+ul.bookshelf.bookshelf {
+  padding: 0;
+  margin: 0;
+  list-style-type: none !important;
+}
+
+ul.bookshelf.bookshelf li {
+  margin: 0;
+  padding: 0;
+}
+
+ul.bookshelf.bookshelf li img.bookshelf__cover {
+  margin: 0;
+  padding: 0;
+  aspect-ratio: 4/6;
+}
+
+h3.bookshelf__title {
+  margin: 0;
+  padding: 0;
+}
+
+.bookshelf.bookshelf--variant-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(5rem, 8rem));
+}
+
+.bookshelf--variant-grid .bookshelf__meta {
+  display: none;
+}
+
+.bookshelf--variant-grid .bookshelf__cover {
+  width: 100%;
+}
+		
+	</style>
+	{{ $bookshelf := .Title ) }}
+
+<ul class="bookshelf bookshelf--variant-grid">
+  {{ range (index .Site.Data.bookshelves $bookshelf) }}
+    <li>
+      <div class="bookshelf__item" title="{{ .title }} by {{ .author }}">
+        <a href="https://micro.blog/books/{{ .isbn }}">
+          <img class="bookshelf__cover" src="{{ .cover_url }}" />
+        </a>
+        <div class="bookshelf__meta">
+          <a href="https://micro.blog/books/{{ .isbn }}">
+            <h3 class="bookshelf__title">{{ .title }}</h3>
+          </a>
+          <span class="bookshelf__by">by</span>
+          <span class="bookshelf__author">{{ .author }}</span>
+        </div>
+      </div>
+    </li>
+  {{ end }}
+</ul>
+</section>
+
 
 <script>
 	/* Make the iframe hidden while loading  */
