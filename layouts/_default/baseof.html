@@ -40,7 +40,8 @@
 	</nav>
 </header>
 <main>{{ block "main" . }}{{ end }}</main>
-<footer>
+<footer
+	<img style="display:block;margin: 0px auto;" width="562" height="19" src="https://web.archive.org/web/20091027102121im_/http://hk.geocities.com/footprints_kayi/border.gif">
 	<h2>It's the end of my website ... and I feel fine.</h2>
 	<p>Made by (∩^o^)⊃━☆ <a href="/" class="h-card" rel="me">Loura</a> •   
 		<a href="https://heyloura.com/feed.xml">RSS</a> • 
@@ -49,5 +50,58 @@
 		<a href="https://xn--sr8hvo.ws">IndieWeb 🕸️💍</a> 
 		<a href="https://xn--sr8hvo.ws/%F0%9F%91%8D%F0%9F%93%8A%F0%9F%92%85/next">→</a></p>
 </footer>
+	<script>
+		var stopAnim = (function () {
+  var priv = {};
+  var pub = {};
+  priv.pauseAll = false;
+  if(window.matchMedia){
+    var mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+     if (!mediaQuery || mediaQuery.matches) { priv.pauseAll = true }
+  }
+
+  priv.stopAnim = function (img) {
+    var coverImage = function () {
+      var width = img.width;
+      var height = img.height;
+      var canvas = document.createElement('canvas');
+      canvas.width = width;
+      canvas.height = height;
+      canvas.getContext('2d').drawImage(img, 0, 0, width, height);
+      canvas.style.position = 'absolute';
+      canvas.style.top = "0";
+      canvas.style.left = "50%";
+      canvas.style.transform = "translate(-50%, 0)";
+      canvas.setAttribute('aria-hidden', 'true');
+      canvas.setAttribute('role', 'presentation');
+      var parent = img.parentNode;
+      parent.style.position = "relative";
+      parent.style.display = "block";
+      parent.insertBefore(canvas, img);
+      img.style.opacity = 0.01;
+    };
+
+    if (img.complete) {
+      coverImage();
+    } else {
+      img.addEventListener('load', coverImage, true);
+    }
+  }
+
+  pub.freezeAll = function () {
+    var images = document.querySelectorAll('img');
+
+    for (x = 0; x < images.length; x++) {
+      priv.stopAnim(images[x]);
+    }
+  };
+
+  if (priv.pauseAll == true) {
+    pub.freezeAll();
+  }
+
+  return pub;
+})();
+	</script>
 </body>
 </html>
