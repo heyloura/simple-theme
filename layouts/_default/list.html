@@ -1,7 +1,7 @@
 {{ define "main" }}
        <header>
-	       <h3 style="display:inline-block">{{ strings.FirstUpper .Title }}</h3>
-       	       <nav style="display:inline-block"> ⚓ <a href="#intro">into</a> ⚓ <a href="#posts">posts</a> ⚓ <a href="#photos">photos</a> ⚓ <a href="#bookmarks">bookmarks</a> ⚓ <a href="#books">books</a></nav>
+	       <h2>{{ strings.FirstUpper .Title }}</h2>
+       	       <nav style="margin-bottom: 2em;"> ⚓ <a href="#intro">into</a> ⚓ <a href="#posts">posts</a> ⚓ <a href="#photos">photos</a> ⚓ <a href="#bookmarks">bookmarks</a> ⚓ <a href="#books">books</a></nav>
        </header>
 	<img id="intro" style="display:block;margin: 0px auto;" width="562" height="19" src="https://web.archive.org/web/20091027102121/http://hk.geocities.com/footprints_kayi/border.gif" />
 	<iframe aria-busy="true"
@@ -13,7 +13,7 @@
 	<header><h2>Dear Internet,</h2></header>
 	<p>
 		Here you can find some ideas or thoughts I had or maybe a picture, bookmark, or book that I found.
-		Wanna chat about {{ .Title }}? Click on its hyperlink and join the conversation []~(￣▽￣)~*, messege me on
+		Wanna chat about {{ .Title }}? Join the conversation []~(￣▽￣)~* on a post, messege me on
 		<a href="https://micro.blog/heyloura">micro.blog</a> or on the fediverse at <a href="https://micro.blog/heyloura?remote_follow=1">@heyloura@heyloura.com</a>
 	</p>
 	<p>Yours truly, <a rel="author" class="p-author h-card" href="/">Loura</a></p>
@@ -87,7 +87,7 @@
 	{{ end }}
   </section>
 
-	<nav>
+	<nav style="margin-bottom: 2em;">
 		{{ if $paginator.HasPrev }}
 			<a rel='prev' href='{{ $paginator.Prev.URL }}' title='Previous Page'>← Newer Posts</a>
 		{{ end }}
@@ -95,7 +95,7 @@
 			<a rel='next' href='{{ $paginator.Next.URL }}'>Older Posts →</a>
 		{{ end }}
 	</nav>
-
+	<img style="display:block;margin: 0px auto;" width="562" height="19" src="https://web.archive.org/web/20091027102121/http://hk.geocities.com/footprints_kayi/border.gif" />
 	<header id="photos"><h2>Photos</h2></header>
 	{{- $list := where .Pages ".Params.photos" "!=" nil -}}
 	{{- $len := (len $list) -}}
