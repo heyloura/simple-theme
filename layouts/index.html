@@ -57,8 +57,7 @@
 	<img style="display:block;margin: 0px auto;" width="562" height="19" src="https://web.archive.org/web/20091027102121im_/http://hk.geocities.com/footprints_kayi/border.gif" />
 	{{ $paginator := .Paginate (where .Site.Pages.ByDate.Reverse "Type" "post") (index .Site.Params "archive-paginate" | default 20) }}
 	{{ range $paginator.Pages  }}
-		{{ if .Page.Params.categories }}
-		{{ else }}
+
 		{{ if .Title }}
 			<dl class="h-entry">
 				<dt>
@@ -116,7 +115,6 @@
 		  });
 		</script>
 	
-		{{ end }}
 	{{ end }}
 	{{ $pag := $.Paginator }}
 	<nav>
