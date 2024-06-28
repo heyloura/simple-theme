@@ -1,9 +1,9 @@
 {{ define "main" }}
-
 	{{ $list := ($.Site.GetPage "taxonomyTerm" "categories").Pages }}
 	
 	{{ $list := (where .Site.Pages "Type" "post") }}
-	<div class="h-feed">
+	<div class="h-feed" style="margin-top:3em;">
+		<img style="display:block;margin: 0px auto;" width="562" height="19" src="https://web.archive.org/web/20091027102121im_/http://hk.geocities.com/footprints_kayi/border.gif">
 		{{ range $list }}
 	
 			<p class="h-entry">
