@@ -1,6 +1,8 @@
 {{ define "main" }}
+	<section style="margin-top:3em;">
+	<img style="display:block;margin: 0px auto;" width="562" height="19" src="https://web.archive.org/web/20091027102121im_/http://hk.geocities.com/footprints_kayi/border.gif">
 
-	<div style="margin-top:3em;display: grid; grid-column-gap: 15px; grid-row-gap: 15px; grid-template-columns: 33% 33% 33%;">
+	<div style="display: grid; grid-column-gap: 15px; grid-row-gap: 15px; grid-template-columns: 33% 33% 33%;">
 
 	{{- $list := where .Site.Pages ".Params.photos" "!=" nil -}}
 	{{- $len := (len $list) -}}
@@ -13,5 +15,5 @@
 	{{ end }}
 
 	</div>
-
+	</section>
 {{ end }}
